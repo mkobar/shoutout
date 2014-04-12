@@ -8,8 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import <GoogleMaps/GoogleMaps.h>
+#import "AppDelegate.h"
+#import <Parse/Parse.h>
 
-@interface MapViewController : UIViewController
+@interface MapViewController : UIViewController<GMSMapViewDelegate, UITextFieldDelegate, CLLocationManagerDelegate>
 @property (strong, nonatomic) IBOutlet UIView *map;
+@property (strong, nonatomic) IBOutlet UITextField *searchTextField;
+
+@property (strong, nonatomic) NSMutableArray * markerArray;
+@property (strong, nonatomic) NSMutableArray * statusArray;
+@property (strong, nonatomic) NSMutableDictionary * markerDictionary;
 
 @end

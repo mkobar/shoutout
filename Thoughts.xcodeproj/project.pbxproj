@@ -46,6 +46,7 @@
 		8F65721E18F9296000477299 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F65721D18F9296000477299 /* libicucore.dylib */; };
 		8F65722018F929D300477299 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F65721F18F929D300477299 /* OpenGLES.framework */; };
 		8F65722218F929EB00477299 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F65722118F929EB00477299 /* GLKit.framework */; };
+		8F65722518F9B87600477299 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F65722418F9B87600477299 /* LocationManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +105,8 @@
 		8F65721D18F9296000477299 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		8F65721F18F929D300477299 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		8F65722118F929EB00477299 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		8F65722318F9B87600477299 /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
+		8F65722418F9B87600477299 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,6 +220,8 @@
 				8F65720D18F927E700477299 /* MapViewController.m */,
 				8F6571D018F909D100477299 /* ViewController.h */,
 				8F6571D118F909D100477299 /* ViewController.m */,
+				8F65722318F9B87600477299 /* LocationManager.h */,
+				8F65722418F9B87600477299 /* LocationManager.m */,
 				8F6571D318F909D100477299 /* Images.xcassets */,
 				8F6571C218F909D100477299 /* Supporting Files */,
 			);
@@ -351,6 +356,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F6571D218F909D100477299 /* ViewController.m in Sources */,
+				8F65722518F9B87600477299 /* LocationManager.m in Sources */,
 				8F6571CC18F909D100477299 /* AppDelegate.m in Sources */,
 				8F6571C818F909D100477299 /* main.m in Sources */,
 				8F65720E18F927E700477299 /* MapViewController.m in Sources */,

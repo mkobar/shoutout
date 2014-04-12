@@ -8,11 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import "AppDelegate.h"
 
 @interface ViewController : UIViewController<PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
+@property (strong, nonatomic) IBOutlet UIButton *logoutButton;
 @property (strong, nonatomic) IBOutlet UITextField *statusTextField;
 @property (strong, nonatomic) IBOutlet UIButton *saveButton;
 - (IBAction)saveButtonPressed:(id)sender;
+- (IBAction)logoutButtonPressed:(id)sender;
+
+@property (strong, nonatomic) PFObject * status;
+@property (nonatomic, strong) NSMutableData *imageData;
 
 @end
