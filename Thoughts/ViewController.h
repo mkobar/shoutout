@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController<PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
+
+@property (strong, nonatomic) IBOutlet UITextField *statusTextField;
+@property (strong, nonatomic) IBOutlet UIButton *saveButton;
+- (IBAction)saveButtonPressed:(id)sender;
 
 @end
