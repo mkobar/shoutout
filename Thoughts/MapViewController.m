@@ -45,7 +45,10 @@ BOOL mapbox = true;
     self.statusArray = [[NSMutableArray alloc] init];
     // Do any additional setup after loading the view.
     self.searchTextField.delegate = self;
-    
+    self.statusTextField.layer.cornerRadius = 4.0f;
+    [self.doneButton setHidden:YES];
+//    [self.statusTextField setReturnKeyType:UIReturnKeyDone];
+
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:40.1105
                                                             longitude:-88.2284
                                                                  zoom:15];
@@ -103,7 +106,8 @@ BOOL mapbox = true;
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = YES;
-    
+
+    [self.saveButton.layer setCornerRadius:4.0f];
     PFGeoPoint *userLocation =
     [PFGeoPoint geoPointWithLatitude:40.1105
                            longitude:-88.2284];
@@ -120,8 +124,8 @@ BOOL mapbox = true;
             NSLog(@"Successfully retrieved %lu statuses.", (unsigned long)objects.count);
             
             for (PFObject * obj in objects){
-                NSString * caption = [obj[@"username"] stringByAppendingString:[NSString stringWithFormat:@": %@", obj[@"status"]]];
-                
+//                NSString * caption = [obj[@"username"] stringByAppendingString:[NSString stringWithFormat:@": %@", obj[@"status"]]];
+
                 RMAnnotation *annotation = [[RMAnnotation alloc] initWithMapView:mapViewR
                                                                        coordinate:CLLocationCoordinate2DMake(((PFGeoPoint *)obj[@"geo"]).latitude, ((PFGeoPoint *)obj[@"geo"]).longitude)
                                                                          andTitle:obj[@"status"]];
@@ -263,6 +267,14 @@ BOOL mapbox = true;
     return YES;
 }
 
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    [self.doneButton setHidden:NO];
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    [self.doneButton setHidden:YES];
+}
+
 -(UIImage *) drawPin:(UIImage *) image{
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(40, 40), NO, [UIScreen mainScreen].scale);
     CGContextRef ctx = UIGraphicsGetCurrentContext();
@@ -285,6 +297,10 @@ BOOL mapbox = true;
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     
+}
+
+- (IBAction)doneButtonPressed:(id)sender {
+    [self.statusTextField resignFirstResponder];
 }
 
 - (IBAction)shoutOutButtonPressed:(id)sender {

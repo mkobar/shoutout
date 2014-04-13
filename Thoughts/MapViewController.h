@@ -14,14 +14,15 @@
 #import <MessageUI/MessageUI.h>
 #import <Firebase/Firebase.h>
 
-@interface MapViewController : UIViewController<GMSMapViewDelegate, UITextFieldDelegate, CLLocationManagerDelegate, RMMapViewDelegate, MFMessageComposeViewControllerDelegate, RDAPIRequestDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
+@interface MapViewController : UIViewController<GMSMapViewDelegate, UITextFieldDelegate, UITextViewDelegate, CLLocationManagerDelegate, RMMapViewDelegate, MFMessageComposeViewControllerDelegate, RDAPIRequestDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 @property (strong, nonatomic) IBOutlet UIView *map;
 @property (strong, nonatomic) IBOutlet UITextField *searchTextField;
 @property (strong, nonatomic) IBOutlet UIView *slidingView;
 @property (strong, nonatomic) IBOutlet UIImageView *profilePic;
-@property (strong, nonatomic) IBOutlet UITextField *statusTextField;
+@property (strong, nonatomic) IBOutlet UITextView *statusTextField;
 @property (strong, nonatomic) IBOutlet UISwitch *privacyToggle;
 @property (strong, nonatomic) IBOutlet UIButton *saveButton;
+@property (strong, nonatomic) IBOutlet UIButton *doneButton;
 
 - (IBAction)saveButtonPressed:(id)sender;
 @property (strong, nonatomic) NSMutableArray * markerArray;
@@ -34,8 +35,6 @@
 
 @property (strong, nonatomic) Rdio *rdio;
 - (IBAction)shoutOutButtonPressed:(id)sender;
-
-- (IBAction) toggleSwitched:(id)sender;
 
 -(void)locationDidUpdate:(NSNotification *) notification;
 
