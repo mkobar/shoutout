@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "LocationManager.h"
+#import <Rdio/Rdio.h>
 
 
 @interface ViewController ()
@@ -36,6 +37,15 @@
 //            }
 //        }];
         self.statusTextField.text = [PFUser currentUser][@"status"];
+        
+        UIImage * image;
+        
+        image = [UIImage imageWithData:
+                     [NSData dataWithContentsOfURL:
+                      [NSURL URLWithString: [PFUser currentUser][@"picURL"]]]];
+        self.profileImage.image = image;
+        self.profileImage.layer.cornerRadius = 57.0;
+        self.profileImage.layer.masksToBounds = YES;
     }
 }
 
@@ -52,17 +62,15 @@
 }
 
 - (IBAction)saveButtonPressed:(id)sender {
-    PFObject *statusObject = self.status;
-    
-    statusObject[@"status"] = self.statusTextField.text;
+    [PFUser currentUser][@"status"] = self.statusTextField.text;
     
     CLLocation *currentLocation = [[AppDelegate sharedLocationManager] location];
     
     PFGeoPoint *currentPoint = [PFGeoPoint geoPointWithLatitude:currentLocation.coordinate.latitude
                                                       longitude:currentLocation.coordinate.longitude];
-    [statusObject setObject:currentPoint forKey:@kParseObjectGeoKey];
+    [[PFUser currentUser] setObject:currentPoint forKey:@kParseObjectGeoKey];
     
-    [statusObject saveInBackground];
+    [[PFUser currentUser] saveInBackground];
     
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -211,5 +219,7 @@
 - (void)signUpViewControllerDidCancelSignUp:(PFSignUpViewController *)signUpController {
     NSLog(@"User dismissed the signUpViewController");
 }
+
+
 
 @end

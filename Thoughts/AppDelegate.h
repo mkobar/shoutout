@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 #import "LocationManager.h"
+#import <Rdio/Rdio.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

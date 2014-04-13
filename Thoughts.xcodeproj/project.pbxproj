@@ -47,6 +47,15 @@
 		8F65722018F929D300477299 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F65721F18F929D300477299 /* OpenGLES.framework */; };
 		8F65722218F929EB00477299 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F65722118F929EB00477299 /* GLKit.framework */; };
 		8F65722518F9B87600477299 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F65722418F9B87600477299 /* LocationManager.m */; };
+		8F65722918FA01CC00477299 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F65722818FA01CC00477299 /* background.png */; };
+		8F65722B18FA07DF00477299 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F65722A18FA07DF00477299 /* Mapbox.framework */; };
+		8F65722D18FA088D00477299 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F65722C18FA088D00477299 /* libsqlite3.dylib */; };
+		8F65722F18FA08A600477299 /* Mapbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8F65722E18FA08A600477299 /* Mapbox.bundle */; };
+		8F65723518FA1EDD00477299 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F65723418FA1EDD00477299 /* MessageUI.framework */; };
+		8F65723818FA356A00477299 /* Rdio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F65723618FA2ADE00477299 /* Rdio.framework */; };
+		8F65723A18FA4B7B00477299 /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F65723918FA4B7B00477299 /* Firebase.framework */; };
+		8F65723C18FA52D500477299 /* shoutout_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F65723B18FA52D500477299 /* shoutout_white.png */; };
+		8F65723E18FA5A1C00477299 /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F65723D18FA5A1C00477299 /* search.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +116,15 @@
 		8F65722118F929EB00477299 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		8F65722318F9B87600477299 /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
 		8F65722418F9B87600477299 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
+		8F65722818FA01CC00477299 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+		8F65722A18FA07DF00477299 /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = "<group>"; };
+		8F65722C18FA088D00477299 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		8F65722E18FA08A600477299 /* Mapbox.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Mapbox.bundle; sourceTree = "<group>"; };
+		8F65723418FA1EDD00477299 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		8F65723618FA2ADE00477299 /* Rdio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Rdio.framework; sourceTree = "<group>"; };
+		8F65723918FA4B7B00477299 /* Firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Firebase.framework; sourceTree = "<group>"; };
+		8F65723B18FA52D500477299 /* shoutout_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shoutout_white.png; sourceTree = "<group>"; };
+		8F65723D18FA5A1C00477299 /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +132,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F65723818FA356A00477299 /* Rdio.framework in Frameworks */,
+				8F6571FF18F910C000477299 /* Security.framework in Frameworks */,
+				8F6571F318F9106F00477299 /* AudioToolbox.framework in Frameworks */,
+				8F65723A18FA4B7B00477299 /* Firebase.framework in Frameworks */,
+				8F65720318F910D100477299 /* SystemConfiguration.framework in Frameworks */,
+				8F6571F518F9107A00477299 /* CFNetwork.framework in Frameworks */,
+				8F6571BE18F909D100477299 /* CoreGraphics.framework in Frameworks */,
+				8F65723518FA1EDD00477299 /* MessageUI.framework in Frameworks */,
+				8F65722D18FA088D00477299 /* libsqlite3.dylib in Frameworks */,
 				8F65722218F929EB00477299 /* GLKit.framework in Frameworks */,
 				8F65722018F929D300477299 /* OpenGLES.framework in Frameworks */,
 				8F65721E18F9296000477299 /* libicucore.dylib in Frameworks */,
@@ -124,22 +151,18 @@
 				8F65721418F9293B00477299 /* libc++.dylib in Frameworks */,
 				8F65720B18F916E700477299 /* Accounts.framework in Frameworks */,
 				8F65720918F916A500477299 /* Social.framework in Frameworks */,
-				8F65720718F9162600477299 /* Twitter.framework in Frameworks */,
-				8F65720318F910D100477299 /* SystemConfiguration.framework in Frameworks */,
 				8F65720118F910C900477299 /* StoreKit.framework in Frameworks */,
-				8F6571FF18F910C000477299 /* Security.framework in Frameworks */,
 				8F65721018F9288500477299 /* GoogleMaps.framework in Frameworks */,
 				8F6571FD18F910AB00477299 /* QuartzCore.framework in Frameworks */,
+				8F65720718F9162600477299 /* Twitter.framework in Frameworks */,
 				8F6571BC18F909D100477299 /* Foundation.framework in Frameworks */,
 				8F6571FB18F910A200477299 /* MobileCoreServices.framework in Frameworks */,
 				8F6571F918F9109800477299 /* libz.dylib in Frameworks */,
 				8F6571F718F9108F00477299 /* CoreLocation.framework in Frameworks */,
-				8F6571BE18F909D100477299 /* CoreGraphics.framework in Frameworks */,
-				8F6571F518F9107A00477299 /* CFNetwork.framework in Frameworks */,
-				8F6571F318F9106F00477299 /* AudioToolbox.framework in Frameworks */,
 				8F6571C018F909D100477299 /* UIKit.framework in Frameworks */,
 				8F6571F118F9105400477299 /* Parse.framework in Frameworks */,
 				8F65720518F915AE00477299 /* FacebookSDK.framework in Frameworks */,
+				8F65722B18FA07DF00477299 /* Mapbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,6 +201,12 @@
 		8F6571BA18F909D100477299 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8F65723918FA4B7B00477299 /* Firebase.framework */,
+				8F65723618FA2ADE00477299 /* Rdio.framework */,
+				8F65723418FA1EDD00477299 /* MessageUI.framework */,
+				8F65722E18FA08A600477299 /* Mapbox.bundle */,
+				8F65722C18FA088D00477299 /* libsqlite3.dylib */,
+				8F65722A18FA07DF00477299 /* Mapbox.framework */,
 				8F65722118F929EB00477299 /* GLKit.framework */,
 				8F65721F18F929D300477299 /* OpenGLES.framework */,
 				8F65721D18F9296000477299 /* libicucore.dylib */,
@@ -213,6 +242,9 @@
 		8F6571C118F909D100477299 /* Thoughts */ = {
 			isa = PBXGroup;
 			children = (
+				8F65723B18FA52D500477299 /* shoutout_white.png */,
+				8F65722818FA01CC00477299 /* background.png */,
+				8F65723D18FA5A1C00477299 /* search.png */,
 				8F6571CA18F909D100477299 /* AppDelegate.h */,
 				8F6571CB18F909D100477299 /* AppDelegate.m */,
 				8F6571CD18F909D100477299 /* Main.storyboard */,
@@ -333,8 +365,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F65723C18FA52D500477299 /* shoutout_white.png in Resources */,
 				8F6571D418F909D100477299 /* Images.xcassets in Resources */,
+				8F65722918FA01CC00477299 /* background.png in Resources */,
+				8F65723E18FA5A1C00477299 /* search.png in Resources */,
 				8F6571C618F909D100477299 /* InfoPlist.strings in Resources */,
+				8F65722F18FA08A600477299 /* Mapbox.bundle in Resources */,
 				8F6571CF18F909D100477299 /* Main.storyboard in Resources */,
 				8F65721218F928C700477299 /* GoogleMaps.bundle in Resources */,
 			);
@@ -491,8 +527,13 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Thoughts/Thoughts-Prefix.pch";
 				INFOPLIST_FILE = "Thoughts/Thoughts-Info.plist";
-				OTHER_LDFLAGS = "-ObjC";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = armv7s;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -509,8 +550,13 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Thoughts/Thoughts-Prefix.pch";
 				INFOPLIST_FILE = "Thoughts/Thoughts-Info.plist";
-				OTHER_LDFLAGS = "-ObjC";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = armv7s;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
