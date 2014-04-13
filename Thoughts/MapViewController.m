@@ -111,6 +111,7 @@ BOOL mapbox = true;
     // Construct query
     PFQuery *query = [PFUser query];
     [query whereKey:@kParseObjectGeoKey nearGeoPoint:userLocation withinKilometers:50000];
+    [query whereKey:@kParseObjectVisibleKey equalTo:[NSNumber numberWithBool:YES]];
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
@@ -490,6 +491,7 @@ BOOL mapbox = true;
 
 - (IBAction)saveButtonPressed:(id)sender {
     [PFUser currentUser][@"status"] = self.statusTextField.text;
+    [PFUser currentUser][@"visible"] = [NSNumber numberWithBool:self.privacyToggle.on];
     
     CLLocation *currentLocation = [[AppDelegate sharedLocationManager] location];
     

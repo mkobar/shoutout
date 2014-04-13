@@ -35,6 +35,8 @@
 @property (strong, nonatomic) Rdio *rdio;
 - (IBAction)shoutOutButtonPressed:(id)sender;
 
+- (IBAction) toggleSwitched:(id)sender;
+
 -(void)locationDidUpdate:(NSNotification *) notification;
 
 @end

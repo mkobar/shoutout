@@ -11,6 +11,7 @@
 #define kParseObjectImageKey    "imageFile"
 #define kParseObjectUserKey     "user"
 #define kParseObjectCaption     "caption"
+#define kParseObjectVisibleKey  "visible"
 
 #import <UIKit/UIKit.h>
 #import "LocationManager.h"
