@@ -32,6 +32,8 @@
 @property (assign, nonatomic) BOOL shelf;
 
 @property (strong, nonatomic) Firebase* shoutoutRoot;
+@property (strong, nonatomic) Firebase* shoutoutRootStatus;
+@property (strong, nonatomic) Firebase* shoutoutRootPrivacy;
 
 @property (strong, nonatomic) Rdio *rdio;
 - (IBAction)shoutOutButtonPressed:(id)sender;

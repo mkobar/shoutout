@@ -84,10 +84,20 @@ BOOL mapbox = true;
     [nc addObserver:self selector:@selector(keyboardWillHide:) name:
      UIKeyboardWillHideNotification object:nil];
     
-    self.shoutoutRoot = [[Firebase alloc] initWithUrl:@"https://shoutout.firebaseio.com/"];
+    self.shoutoutRoot = [[Firebase alloc] initWithUrl:@"https://shoutout.firebaseio.com/loc"];
+    self.shoutoutRootStatus = [[Firebase alloc] initWithUrl:@"https://shoutout.firebaseio.com/status"];
+    self.shoutoutRootPrivacy = [[Firebase alloc] initWithUrl:@"https://shoutout.firebaseio.com/privacy"];
     
     [self.shoutoutRoot observeEventType:FEventTypeChildChanged withBlock:^(FDataSnapshot *snapshot) {
         [self animateUser:snapshot.name toNewPosition:snapshot.value];
+    }];
+    
+    [self.shoutoutRootStatus observeEventType:FEventTypeChildChanged withBlock:^(FDataSnapshot *snapshot) {
+        [self changeUserStatus:snapshot.name toNewStatus:snapshot.value];
+    }];
+    
+    [self.shoutoutRootStatus observeEventType:FEventTypeChildChanged withBlock:^(FDataSnapshot *snapshot) {
+        [self changeUserPrivacy:snapshot.name toNewPrivacy:snapshot.value];
     }];
     
     UIImage * image;
@@ -112,6 +122,22 @@ BOOL mapbox = true;
     [PFGeoPoint geoPointWithLatitude:40.1105
                            longitude:-88.2284];
     
+    [self updateMapWithLocation:userLocation];
+}
+
+-(void) viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
+    [self promptLogin];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void) updateMapWithLocation:(PFGeoPoint *)userLocation{
     // Construct query
     PFQuery *query = [PFUser query];
     [query whereKey:@kParseObjectGeoKey nearGeoPoint:userLocation withinKilometers:50000];
@@ -124,15 +150,18 @@ BOOL mapbox = true;
             NSLog(@"Successfully retrieved %lu statuses.", (unsigned long)objects.count);
             
             for (PFObject * obj in objects){
-//                NSString * caption = [obj[@"username"] stringByAppendingString:[NSString stringWithFormat:@": %@", obj[@"status"]]];
-
+                //                NSString * caption = [obj[@"username"] stringByAppendingString:[NSString stringWithFormat:@": %@", obj[@"status"]]];
+                
                 RMAnnotation *annotation = [[RMAnnotation alloc] initWithMapView:mapViewR
-                                                                       coordinate:CLLocationCoordinate2DMake(((PFGeoPoint *)obj[@"geo"]).latitude, ((PFGeoPoint *)obj[@"geo"]).longitude)
-                                                                         andTitle:obj[@"status"]];
+                                                                      coordinate:CLLocationCoordinate2DMake(((PFGeoPoint *)obj[@"geo"]).latitude, ((PFGeoPoint *)obj[@"geo"]).longitude)
+                                                                        andTitle:obj[@"status"]];
                 
                 annotation.userInfo = obj;
                 annotation.anchorPoint = CGPointMake(24, 56);
-                [mapViewR addAnnotation:annotation];
+                
+                if(obj[@"visible"]){
+                    [mapViewR addAnnotation:annotation];
+                }
                 
                 
                 GMSMarker *newmark;
@@ -166,7 +195,10 @@ BOOL mapbox = true;
                 if([self.markerDictionary objectForKey:[obj objectId]]){
                     [mapViewR removeAnnotation:[self.markerDictionary objectForKey:[obj objectId]]];
                 }
-                [self.markerDictionary setObject:annotation forKey:[obj objectId]];
+                
+                if(obj[@"visible"]){
+                    [self.markerDictionary setObject:annotation forKey:[obj objectId]];
+                }
                 
                 [mapView_ setSelectedMarker:newmark];
                 
@@ -177,18 +209,6 @@ BOOL mapbox = true;
             NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
     }];
-}
-
--(void) viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    
-    [self promptLogin];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 
@@ -300,7 +320,8 @@ BOOL mapbox = true;
 }
 
 - (IBAction)doneButtonPressed:(id)sender {
-    [self.statusTextField resignFirstResponder];
+    [self saveButtonPressed:nil];
+//    [self.statusTextField resignFirstResponder];
 }
 
 - (IBAction)shoutOutButtonPressed:(id)sender {
@@ -380,14 +401,20 @@ BOOL mapbox = true;
         viewController.recipients = [[NSArray alloc] initWithObjects:annotation.userInfo[@"phone"], nil];
         [self presentViewController:viewController animated:YES completion:nil];
     }
-}
-
-- (void)longPressOnAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map{
     if([annotation.title rangeOfString:@"listening to " options:NSCaseInsensitiveSearch].location != NSNotFound){
         NSString * song = [annotation.title substringFromIndex:13];
         self.rdio = [[Rdio alloc] initWithConsumerKey:@"thrhvh2bkpy5devcntw4qat6" andSecret:@"Nrzm8K5G4m" delegate:nil];
         [self.rdio callAPIMethod:@"searchSuggestions" withParameters:[NSDictionary dictionaryWithObject:song forKey:@"query"] delegate:self];
     }
+    else if([annotation.title rangeOfString:@"listen to " options:NSCaseInsensitiveSearch].location != NSNotFound){
+        NSString * song = [annotation.title substringFromIndex:10];
+        self.rdio = [[Rdio alloc] initWithConsumerKey:@"thrhvh2bkpy5devcntw4qat6" andSecret:@"Nrzm8K5G4m" delegate:nil];
+        [self.rdio callAPIMethod:@"searchSuggestions" withParameters:[NSDictionary dictionaryWithObject:song forKey:@"query"] delegate:self];
+    }
+}
+
+- (void)longPressOnAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map{
+
 }
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result{
@@ -404,6 +431,28 @@ BOOL mapbox = true;
 
 - (void) animateUser:(NSString *)userID toNewPosition:(NSDictionary *)newMetadata {
     ((RMAnnotation *)self.markerDictionary[userID]).coordinate = CLLocationCoordinate2DMake([newMetadata[@"lat"] floatValue], [newMetadata[@"long"] floatValue] );
+}
+
+- (void) changeUserStatus:(NSString *)userID toNewStatus:(NSDictionary *)newMetadata {
+    ((RMAnnotation *)self.markerDictionary[userID]).title = newMetadata[@"status"];
+    [mapViewR deselectAnnotation:((RMAnnotation *)self.markerDictionary[userID]) animated:NO];
+    mapViewR.selectedAnnotation = ((RMAnnotation *)self.markerDictionary[userID]);
+}
+
+- (void) changeUserPrivacy:(NSString *)userID toNewPrivacy:(NSDictionary *)newMetadata {
+    if([((NSString *)newMetadata[@"privacy"]) isEqualToString:@"NO"]){
+        if(((RMAnnotation *)self.markerDictionary[userID]) != nil){
+            [mapViewR removeAnnotation:((RMAnnotation *)self.markerDictionary[userID])];
+        }
+    }
+    else{
+        if(((RMAnnotation *)self.markerDictionary[userID]) != nil){
+            [mapViewR addAnnotation:((RMAnnotation *)self.markerDictionary[userID])];
+        }
+        else{
+            
+        }
+    }
 }
 
 -(void)promptLogin{
@@ -521,6 +570,18 @@ BOOL mapbox = true;
     
     [self shoutOutButtonPressed:nil];
     [self.statusTextField resignFirstResponder];
+    
+    [[[self.shoutoutRootStatus childByAppendingPath:[[PFUser currentUser] objectId]] childByAppendingPath:@"status" ] setValue:self.statusTextField.text];
+    
+    if(self.privacyToggle.on){
+        [[[self.shoutoutRootStatus childByAppendingPath:[[PFUser currentUser] objectId]] childByAppendingPath:@"privacy" ] setValue:@"YES"];
+    }
+    else{
+        [[[self.shoutoutRootStatus childByAppendingPath:[[PFUser currentUser] objectId]] childByAppendingPath:@"privacy" ] setValue:@"NO"];
+    }
+    
+    PFGeoPoint *currentCenter = [PFGeoPoint geoPointWithLatitude:mapViewR.centerCoordinate.latitude longitude:mapViewR.centerCoordinate.longitude];
+//    [self updateMapWithLocation:currentCenter];
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification
