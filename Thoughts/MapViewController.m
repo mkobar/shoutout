@@ -63,6 +63,8 @@ BOOL mapbox = true;
     CLLocationCoordinate2D centerCoordinate = CLLocationCoordinate2DMake(40.11344592090707, -88.22478390307);
     mapViewR = [[RMMapView alloc] initWithFrame:self.view.bounds andTilesource:tileSource centerCoordinate:centerCoordinate zoomLevel:9.0 maxZoomLevel:15.0 minZoomLevel:1.0 backgroundImage:nil];
     
+    mapViewR.tileSourcesZoom = 17.0;
+    
     mapViewR.delegate = self;
     
     [self.map addSubview:mapViewR];
@@ -108,7 +110,7 @@ BOOL mapbox = true;
     
     // Construct query
     PFQuery *query = [PFUser query];
-    [query whereKey:@kParseObjectGeoKey nearGeoPoint:userLocation withinKilometers:5000];
+    [query whereKey:@kParseObjectGeoKey nearGeoPoint:userLocation withinKilometers:50000];
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
@@ -117,7 +119,7 @@ BOOL mapbox = true;
             NSLog(@"Successfully retrieved %lu statuses.", (unsigned long)objects.count);
             
             for (PFObject * obj in objects){
-                
+                NSString * caption = [obj[@"username"] stringByAppendingString:[NSString stringWithFormat:@": %@", obj[@"status"]]];
                 
                 RMAnnotation *annotation = [[RMAnnotation alloc] initWithMapView:mapViewR
                                                                        coordinate:CLLocationCoordinate2DMake(((PFGeoPoint *)obj[@"geo"]).latitude, ((PFGeoPoint *)obj[@"geo"]).longitude)
@@ -239,10 +241,6 @@ BOOL mapbox = true;
     [mapView selectAnnotation:toShow animated:YES];
 }
 
-- (void)sortByDistanceFromLocation:(CLLocation *)location{
-    
-}
-
 /*
 #pragma mark - Navigation
 
@@ -311,6 +309,7 @@ BOOL mapbox = true;
                          }
                          completion:nil];
         self.shelf = false;
+        [self.statusTextField resignFirstResponder];
     }
 }
 
@@ -356,27 +355,21 @@ BOOL mapbox = true;
     return destImage;
 }
 
-- (void)tapOnLabelForAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map{
-    NSLog(@"test");
-}
-
-- (void)tapOnCalloutAccessoryControl:(UIControl *)control forAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map{
-    NSLog(@"test1");
-}
-
 - (void)doubleTapOnAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map{
-    if([annotation.title rangeOfString:@"listening to " options:NSCaseInsensitiveSearch].location != NSNotFound){
-        NSString * song = [annotation.title substringFromIndex:13];
-        self.rdio = [[Rdio alloc] initWithConsumerKey:@"thrhvh2bkpy5devcntw4qat6" andSecret:@"Nrzm8K5G4m" delegate:nil];
-        [self.rdio callAPIMethod:@"searchSuggestions" withParameters:[NSDictionary dictionaryWithObject:song forKey:@"query"] delegate:self];
-    }
-    
     if(annotation.userInfo[@"phone"]){
         MFMessageComposeViewController *viewController = [[MFMessageComposeViewController alloc] init];
         
         viewController.messageComposeDelegate = self;
         viewController.recipients = [[NSArray alloc] initWithObjects:annotation.userInfo[@"phone"], nil];
         [self presentViewController:viewController animated:YES completion:nil];
+    }
+}
+
+- (void)longPressOnAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map{
+    if([annotation.title rangeOfString:@"listening to " options:NSCaseInsensitiveSearch].location != NSNotFound){
+        NSString * song = [annotation.title substringFromIndex:13];
+        self.rdio = [[Rdio alloc] initWithConsumerKey:@"thrhvh2bkpy5devcntw4qat6" andSecret:@"Nrzm8K5G4m" delegate:nil];
+        [self.rdio callAPIMethod:@"searchSuggestions" withParameters:[NSDictionary dictionaryWithObject:song forKey:@"query"] delegate:self];
     }
 }
 
@@ -514,15 +507,15 @@ BOOL mapbox = true;
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
-    [self animateTextField:self.view up:YES withInfo:notification.userInfo];
+    [self animateTextField:self.slidingView up:YES withInfo:notification.userInfo];
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
-    [self animateTextField:self.view up:NO withInfo:notification.userInfo];
+    [self animateTextField:self.slidingView up:NO withInfo:notification.userInfo];
 }
 
-- (void) animateTextField: (UIView*) textField up: (BOOL) up withInfo:(NSDictionary *)userInfo
+- (void) animateTextField: (UIView*) view up: (BOOL) up withInfo:(NSDictionary *)userInfo
 {
     const int movementDistance = 140; // tweak as needed
     NSTimeInterval movementDuration;
@@ -536,7 +529,7 @@ BOOL mapbox = true;
     [UIView setAnimationBeginsFromCurrentState: YES];
     [UIView setAnimationCurve: animationCurve];
     [UIView setAnimationDuration: movementDuration];
-    self.view.frame = CGRectOffset(self.view.frame, 0, movement);
+    view.frame = CGRectOffset(view.frame, 0, movement);
     [UIView commitAnimations];
 }
 @end
