@@ -15,7 +15,6 @@
 		8F6571CC18F909D100477299 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F6571CB18F909D100477299 /* AppDelegate.m */; };
 		8F6571CF18F909D100477299 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F6571CD18F909D100477299 /* Main.storyboard */; };
 		8F6571D218F909D100477299 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F6571D118F909D100477299 /* ViewController.m */; };
-		8F6571D418F909D100477299 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F6571D318F909D100477299 /* Images.xcassets */; };
 		8F6571DB18F909D100477299 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F6571DA18F909D100477299 /* XCTest.framework */; };
 		8F6571DC18F909D100477299 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F6571BB18F909D100477299 /* Foundation.framework */; };
 		8F6571DD18F909D100477299 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F6571BF18F909D100477299 /* UIKit.framework */; };
@@ -56,6 +55,7 @@
 		8F65723A18FA4B7B00477299 /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F65723918FA4B7B00477299 /* Firebase.framework */; };
 		8F65723C18FA52D500477299 /* shoutout_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F65723B18FA52D500477299 /* shoutout_white.png */; };
 		8F65723E18FA5A1C00477299 /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F65723D18FA5A1C00477299 /* search.png */; };
+		8F65724018FA77E400477299 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F65723F18FA77E400477299 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,7 +82,6 @@
 		8F6571CE18F909D100477299 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8F6571D018F909D100477299 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		8F6571D118F909D100477299 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		8F6571D318F909D100477299 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8F6571D918F909D100477299 /* ThoughtsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ThoughtsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F6571DA18F909D100477299 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		8F6571E218F909D100477299 /* ThoughtsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ThoughtsTests-Info.plist"; sourceTree = "<group>"; };
@@ -125,6 +124,7 @@
 		8F65723918FA4B7B00477299 /* Firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Firebase.framework; sourceTree = "<group>"; };
 		8F65723B18FA52D500477299 /* shoutout_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shoutout_white.png; sourceTree = "<group>"; };
 		8F65723D18FA5A1C00477299 /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
+		8F65723F18FA77E400477299 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,7 +254,7 @@
 				8F6571D118F909D100477299 /* ViewController.m */,
 				8F65722318F9B87600477299 /* LocationManager.h */,
 				8F65722418F9B87600477299 /* LocationManager.m */,
-				8F6571D318F909D100477299 /* Images.xcassets */,
+				8F65723F18FA77E400477299 /* Images.xcassets */,
 				8F6571C218F909D100477299 /* Supporting Files */,
 			);
 			path = Thoughts;
@@ -336,6 +336,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Mayank Jain";
 				TargetAttributes = {
+					8F6571B718F909D100477299 = {
+						DevelopmentTeam = 9C8EQ3DGNG;
+					};
 					8F6571D818F909D100477299 = {
 						TestTargetID = 8F6571B718F909D100477299;
 					};
@@ -366,7 +369,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F65723C18FA52D500477299 /* shoutout_white.png in Resources */,
-				8F6571D418F909D100477299 /* Images.xcassets in Resources */,
+				8F65724018FA77E400477299 /* Images.xcassets in Resources */,
 				8F65722918FA01CC00477299 /* background.png in Resources */,
 				8F65723E18FA5A1C00477299 /* search.png in Resources */,
 				8F6571C618F909D100477299 /* InfoPlist.strings in Resources */,
@@ -520,6 +523,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -533,6 +538,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = armv7s;
 				WRAPPER_EXTENSION = app;
 			};
@@ -543,6 +549,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -556,6 +564,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = armv7s;
 				WRAPPER_EXTENSION = app;
 			};

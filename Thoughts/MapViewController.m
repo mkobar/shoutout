@@ -60,7 +60,7 @@ BOOL mapbox = true;
     
     
     RMMapboxSource *tileSource = [[RMMapboxSource alloc] initWithMapID:@"mjmayank.hpa3bj3b"];
-    CLLocationCoordinate2D centerCoordinate = CLLocationCoordinate2DMake(40.1105, -88.2284);
+    CLLocationCoordinate2D centerCoordinate = CLLocationCoordinate2DMake(40.11344592090707, -88.22478390307);
     mapViewR = [[RMMapView alloc] initWithFrame:self.view.bounds andTilesource:tileSource centerCoordinate:centerCoordinate zoomLevel:9.0 maxZoomLevel:15.0 minZoomLevel:1.0 backgroundImage:nil];
     
     mapViewR.delegate = self;
@@ -73,12 +73,15 @@ BOOL mapbox = true;
 //    [AppDelegate sharedLocationManager].delegate = self;
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     CLLocation * locationInfo;
-    [nc addObserver:self selector:@selector(locationDidUpdate) name:@"LocationUpdate" object:locationInfo];
+    [nc addObserver:self selector:@selector(locationDidUpdate:) name:@"LocationUpdate" object:locationInfo];
+    [nc addObserver:self selector:@selector(keyboardWillShow:) name:
+     UIKeyboardWillShowNotification object:nil];
+    [nc addObserver:self selector:@selector(keyboardWillHide:) name:
+     UIKeyboardWillHideNotification object:nil];
     
+    self.shoutoutRoot = [[Firebase alloc] initWithUrl:@"https://shoutout.firebaseio.com/"];
     
-    Firebase* shoutoutRoot = [[Firebase alloc] initWithUrl:@"https://shoutout.firebaseio.com/"];
-    
-    [shoutoutRoot observeEventType:FEventTypeChildChanged withBlock:^(FDataSnapshot *snapshot) {
+    [self.shoutoutRoot observeEventType:FEventTypeChildChanged withBlock:^(FDataSnapshot *snapshot) {
         [self animateUser:snapshot.name toNewPosition:snapshot.value];
     }];
     
@@ -90,6 +93,8 @@ BOOL mapbox = true;
     self.profilePic.image = image;
     self.profilePic.layer.cornerRadius = 35.0;
     self.profilePic.layer.masksToBounds = YES;
+    
+    self.statusTextField.delegate = self;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -165,6 +170,12 @@ BOOL mapbox = true;
             NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
     }];
+}
+
+-(void) viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
+    [self promptLogin];
 }
 
 - (void)didReceiveMemoryWarning
@@ -303,10 +314,21 @@ BOOL mapbox = true;
     }
 }
 
--(void)locationDidUpdate{
-//    NSLog(@"test");
-//    [PFUser currentUser][@"geo"] = [PFGeoPoint geoPointWithLatitude:40.1108
-//                                                          longitude:-88.2284];
+-(void)locationDidUpdate:(NSNotification *)notification{
+    NSLog(@"test");
+    CLLocation * location = notification.object;
+    
+    NSString *longitude = [NSString stringWithFormat:@"%f", location.coordinate.longitude ];
+    NSString *latitude = [NSString stringWithFormat:@"%f", location.coordinate.latitude ];
+    /*[self.shoutoutRoot observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        
+    }];
+     */
+    if([PFUser currentUser]){
+        [[self.shoutoutRoot childByAppendingPath:[[PFUser currentUser] objectId]] setValue:@{@"lat": latitude, @"long": longitude}];
+        
+        [PFUser currentUser][@"geo"] = [PFGeoPoint geoPointWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
+    }
 }
 
 - (RMMapLayer *)mapView:(RMMapView *)mapView layerForAnnotation:(RMAnnotation *)annotation
@@ -366,36 +388,155 @@ BOOL mapbox = true;
     [self.rdio.player playSource:data[0][@"key"]];
 }
 
-- (void) animateUser:(NSString *)userID toNewPosition:(NSDictionary *)newMetadata {
-    ((RMAnnotation *)self.markerDictionary[userID]).coordinate = CLLocationCoordinate2DMake([newMetadata[@"lat"] floatValue], [newMetadata[@"long"] floatValue] );
-    
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        MKPointAnnotation *busPin = busMetadata.pin;
-//        MKAnnotationView *busView = [self.map viewForAnnotation:busPin];
-//        if(busView) {
-//            CLLocationCoordinate2D newCoord = CLLocationCoordinate2DMake([[newMetadata objectForKey:@"lat"] doubleValue], [[newMetadata objectForKey:@"lon"] doubleValue]);
-//            MKMapPoint mapPoint = MKMapPointForCoordinate(newCoord);
-//            
-//            CGPoint toPos;
-//            CGFloat zoomFactor =  self.map.visibleMapRect.size.width / self.map.bounds.size.width;
-//            toPos.x = mapPoint.x/zoomFactor;
-//            toPos.y = mapPoint.y/zoomFactor;
-//            
-//            if (MKMapRectContainsPoint(self.map.visibleMapRect, mapPoint)) {
-//                CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
-//                animation.fromValue = [NSValue valueWithCGPoint:busView.center];
-//                animation.toValue = [NSValue valueWithCGPoint:toPos];
-//                animation.duration = 5.5;
-//                animation.delegate = busView;
-//                animation.fillMode = kCAFillModeForwards;
-//                [busView.layer addAnimation:animation forKey:@"positionAnimation"];
-//            }
-//            
-//            busView.center = toPos;
-//            busMetadata.metadata = newMetadata;
-//            [busPin setCoordinate:newCoord];
-//        }
-//    });
+- (void) rdioRequest:(RDAPIRequest *)request didFailWithError:(NSError *)error{
+
 }
 
+- (void) animateUser:(NSString *)userID toNewPosition:(NSDictionary *)newMetadata {
+    ((RMAnnotation *)self.markerDictionary[userID]).coordinate = CLLocationCoordinate2DMake([newMetadata[@"lat"] floatValue], [newMetadata[@"long"] floatValue] );
+}
+
+-(void)promptLogin{
+    if (![PFUser currentUser]) { // No user logged in
+        // Create the log in view controller
+        PFLogInViewController *logInViewController = [[PFLogInViewController alloc] init];
+        [logInViewController setDelegate:self]; // Set ourselves as the delegate
+        
+        // Create the sign up view controller
+        PFSignUpViewController *signUpViewController = [[PFSignUpViewController alloc] init];
+        [signUpViewController setDelegate:self]; // Set ourselves as the delegate
+        
+        // Assign our sign up controller to be displayed from the login controller
+        [logInViewController setSignUpController:signUpViewController];
+        
+        logInViewController.facebookPermissions = @[@"friends_about_me"];
+        logInViewController.fields = PFLogInFieldsFacebook | PFLogInFieldsDismissButton; //Facebook login, and a Dismiss button.
+        
+        // Present the log in view controller
+        [self presentViewController:logInViewController animated:YES completion:NULL];
+    }
+    else{
+        self.statusTextField.text = [PFUser currentUser][@"status"];
+    }
+}
+
+#pragma mark -LoginDelegate
+
+// Sent to the delegate to determine whether the log in request should be submitted to the server.
+- (BOOL)logInViewController:(PFLogInViewController *)logInController shouldBeginLogInWithUsername:(NSString *)username password:(NSString *)password {
+    // Check if both fields are completed
+    if (username && password && username.length != 0 && password.length != 0) {
+        return YES; // Begin login process
+    }
+    
+    [[[UIAlertView alloc] initWithTitle:@"Missing Information"
+                                message:@"Make sure you fill out all of the information!"
+                               delegate:nil
+                      cancelButtonTitle:@"ok"
+                      otherButtonTitles:nil] show];
+    return NO; // Interrupt login process
+}
+
+// Sent to the delegate when a PFUser is logged in.
+- (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
+    // Send request to Facebook
+    FBRequest *request = [FBRequest requestForMe];
+    [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        // handle response
+        if (!error) {
+            // Parse the data received
+            if(![PFUser currentUser][@"status"]){
+                
+                NSDictionary *userData = (NSDictionary *)result;
+                
+                NSString *facebookID = userData[@"id"];
+                NSString *facebookUsername = userData[@"username"];
+                
+                NSString *pictureURL = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=200&height=200", facebookID];
+                
+                [[PFUser currentUser] setObject:pictureURL forKey:@"picURL"];
+                [[PFUser currentUser] setObject:facebookUsername forKey:@"username"];
+                [PFUser currentUser][@"status"] = @"Just a man and his thoughts";
+                
+                CLLocation *currentLocation = [[AppDelegate sharedLocationManager] location];
+                
+                PFGeoPoint *currentPoint = [PFGeoPoint geoPointWithLatitude:currentLocation.coordinate.latitude
+                                                                  longitude:currentLocation.coordinate.longitude];
+                [[PFUser currentUser] setObject:currentPoint forKey:@kParseObjectGeoKey];
+                
+                [[PFUser currentUser] saveInBackground];
+            }
+            
+        } else if ([[[[error userInfo] objectForKey:@"error"] objectForKey:@"type"]
+                    isEqualToString: @"OAuthException"]) { // Since the request failed, we can check if it was due to an invalid session
+            NSLog(@"The facebook session was invalidated");
+        } else {
+            NSLog(@"Some other error: %@", error);
+        }
+    }];
+    
+    UIImage * image;
+    
+    image = [UIImage imageWithData:
+             [NSData dataWithContentsOfURL:
+              [NSURL URLWithString: [PFUser currentUser][@"picURL"]]]];
+    self.profilePic.image = image;
+    
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+// Sent to the delegate when the log in attempt fails.
+- (void)logInViewController:(PFLogInViewController *)logInController didFailToLogInWithError:(NSError *)error {
+    NSLog(@"Failed to log in...");
+}
+
+// Sent to the delegate when the log in screen is dismissed.
+- (void)logInViewControllerDidCancelLogIn:(PFLogInViewController *)logInController {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)saveButtonPressed:(id)sender {
+    [PFUser currentUser][@"status"] = self.statusTextField.text;
+    
+    CLLocation *currentLocation = [[AppDelegate sharedLocationManager] location];
+    
+    PFGeoPoint *currentPoint = [PFGeoPoint geoPointWithLatitude:currentLocation.coordinate.latitude
+                                                      longitude:currentLocation.coordinate.longitude];
+    [[PFUser currentUser] setObject:currentPoint forKey:@kParseObjectGeoKey];
+    
+    [[PFUser currentUser] saveInBackground];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+    [self shoutOutButtonPressed:nil];
+    [self.statusTextField resignFirstResponder];
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    [self animateTextField:self.view up:YES withInfo:notification.userInfo];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    [self animateTextField:self.view up:NO withInfo:notification.userInfo];
+}
+
+- (void) animateTextField: (UIView*) textField up: (BOOL) up withInfo:(NSDictionary *)userInfo
+{
+    const int movementDistance = 140; // tweak as needed
+    NSTimeInterval movementDuration;
+    UIViewAnimationCurve animationCurve;
+    [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&animationCurve];
+    [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&movementDuration]; // tweak as needed
+    
+    int movement = (up ? -movementDistance : movementDistance);
+    
+    [UIView beginAnimations: @"anim" context: nil];
+    [UIView setAnimationBeginsFromCurrentState: YES];
+    [UIView setAnimationCurve: animationCurve];
+    [UIView setAnimationDuration: movementDuration];
+    self.view.frame = CGRectOffset(self.view.frame, 0, movement);
+    [UIView commitAnimations];
+}
 @end
