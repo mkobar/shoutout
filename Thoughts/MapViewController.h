@@ -16,8 +16,8 @@
 
 @interface MapViewController : UIViewController<GMSMapViewDelegate, UITextFieldDelegate, UITextViewDelegate, CLLocationManagerDelegate, RMMapViewDelegate, MFMessageComposeViewControllerDelegate, RDAPIRequestDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 @property (strong, nonatomic) IBOutlet UIView *map;
-@property (strong, nonatomic) IBOutlet UITextField *searchTextField;
-@property (strong, nonatomic) IBOutlet UIView *slidingView;
+//@property (strong, nonatomic) IBOutlet UITextField *searchTextField;
+//@property (strong, nonatomic) IBOutlet UIView *slidingView;
 @property (strong, nonatomic) IBOutlet UIImageView *profilePic;
 @property (strong, nonatomic) IBOutlet UITextView *statusTextField;
 @property (strong, nonatomic) IBOutlet UISwitch *privacyToggle;
@@ -36,7 +36,7 @@
 @property (strong, nonatomic) Firebase* shoutoutRootPrivacy;
 
 @property (strong, nonatomic) Rdio *rdio;
-- (IBAction)shoutOutButtonPressed:(id)sender;
+//- (IBAction)shoutOutButtonPressed:(id)sender;
 
 -(void)locationDidUpdate:(NSNotification *) notification;
 

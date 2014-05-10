@@ -44,7 +44,7 @@ BOOL mapbox = true;
     self.markerArray = [[NSMutableArray alloc] init];
     self.statusArray = [[NSMutableArray alloc] init];
     // Do any additional setup after loading the view.
-    self.searchTextField.delegate = self;
+//    self.searchTextField.delegate = self;
     self.statusTextField.layer.cornerRadius = 4.0f;
     [self.doneButton setHidden:YES];
 //    [self.statusTextField setReturnKeyType:UIReturnKeyDone];
@@ -324,32 +324,32 @@ BOOL mapbox = true;
 //    [self.statusTextField resignFirstResponder];
 }
 
-- (IBAction)shoutOutButtonPressed:(id)sender {
-    
-    if(!self.shelf){
-        [UIView animateWithDuration:0.3f
-                              delay:0.0f
-                            options:UIViewAnimationOptionCurveLinear
-                         animations:^{
-                             [self.slidingView setFrame:CGRectMake(self.slidingView.frame.origin.x, self.slidingView.frame.origin.y -170, self.slidingView.frame.size.width, self.slidingView.frame.size.height)];
-                             self.slidingView.alpha = 1.0;
-                         }
-                         completion:nil];
-        self.shelf = true;
-    }
-    else{
-        [UIView animateWithDuration:0.3f
-                              delay:0.0f
-                            options:UIViewAnimationOptionCurveLinear
-                         animations:^{
-                             [self.slidingView setFrame:CGRectMake(self.slidingView.frame.origin.x, self.slidingView.frame.origin.y +170, self.slidingView.frame.size.width, self.slidingView.frame.size.height)];
-                             self.slidingView.alpha = .7;
-                         }
-                         completion:nil];
-        self.shelf = false;
-        [self.statusTextField resignFirstResponder];
-    }
-}
+//- (IBAction)shoutOutButtonPressed:(id)sender {
+//    
+//    if(!self.shelf){
+//        [UIView animateWithDuration:0.3f
+//                              delay:0.0f
+//                            options:UIViewAnimationOptionCurveLinear
+//                         animations:^{
+//                             [self.slidingView setFrame:CGRectMake(self.slidingView.frame.origin.x, self.slidingView.frame.origin.y -170, self.slidingView.frame.size.width, self.slidingView.frame.size.height)];
+//                             self.slidingView.alpha = 1.0;
+//                         }
+//                         completion:nil];
+//        self.shelf = true;
+//    }
+//    else{
+//        [UIView animateWithDuration:0.3f
+//                              delay:0.0f
+//                            options:UIViewAnimationOptionCurveLinear
+//                         animations:^{
+//                             [self.slidingView setFrame:CGRectMake(self.slidingView.frame.origin.x, self.slidingView.frame.origin.y +170, self.slidingView.frame.size.width, self.slidingView.frame.size.height)];
+//                             self.slidingView.alpha = .7;
+//                         }
+//                         completion:nil];
+//        self.shelf = false;
+//        [self.statusTextField resignFirstResponder];
+//    }
+//}
 
 -(void)locationDidUpdate:(NSNotification *)notification{
     NSLog(@"test");
@@ -568,7 +568,7 @@ BOOL mapbox = true;
     
     [self.navigationController popViewControllerAnimated:YES];
     
-    [self shoutOutButtonPressed:nil];
+//    [self shoutOutButtonPressed:nil];
     [self.statusTextField resignFirstResponder];
     
     [[[self.shoutoutRootStatus childByAppendingPath:[[PFUser currentUser] objectId]] childByAppendingPath:@"status" ] setValue:self.statusTextField.text];
@@ -586,12 +586,12 @@ BOOL mapbox = true;
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
-    [self animateTextField:self.slidingView up:YES withInfo:notification.userInfo];
+//    [self animateTextField:self.slidingView up:YES withInfo:notification.userInfo];
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
-    [self animateTextField:self.slidingView up:NO withInfo:notification.userInfo];
+//    [self animateTextField:self.slidingView up:NO withInfo:notification.userInfo];
 }
 
 - (void) animateTextField: (UIView*) view up: (BOOL) up withInfo:(NSDictionary *)userInfo
