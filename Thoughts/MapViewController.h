@@ -16,8 +16,6 @@
 
 @interface MapViewController : UIViewController<GMSMapViewDelegate, UITextFieldDelegate, UITextViewDelegate, CLLocationManagerDelegate, RMMapViewDelegate, MFMessageComposeViewControllerDelegate, RDAPIRequestDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 @property (strong, nonatomic) IBOutlet UIView *map;
-//@property (strong, nonatomic) IBOutlet UITextField *searchTextField;
-//@property (strong, nonatomic) IBOutlet UIView *slidingView;
 @property (strong, nonatomic) IBOutlet UIImageView *profilePic;
 @property (strong, nonatomic) IBOutlet UITextView *statusTextField;
 @property (strong, nonatomic) IBOutlet UISwitch *privacyToggle;

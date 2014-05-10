@@ -56,6 +56,8 @@
 		8F65723C18FA52D500477299 /* shoutout_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F65723B18FA52D500477299 /* shoutout_white.png */; };
 		8F65723E18FA5A1C00477299 /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F65723D18FA5A1C00477299 /* search.png */; };
 		8F65724018FA77E400477299 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F65723F18FA77E400477299 /* Images.xcassets */; };
+		B2DD8EAA191EC50E00DFF899 /* FilterBar.m in Sources */ = {isa = PBXBuildFile; fileRef = B2DD8EA9191EC50E00DFF899 /* FilterBar.m */; };
+		B2DD8EAD191ED6EE00DFF899 /* CustomToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = B2DD8EAC191ED6EE00DFF899 /* CustomToolBar.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +127,10 @@
 		8F65723B18FA52D500477299 /* shoutout_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shoutout_white.png; sourceTree = "<group>"; };
 		8F65723D18FA5A1C00477299 /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
 		8F65723F18FA77E400477299 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		B2DD8EA8191EC50E00DFF899 /* FilterBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterBar.h; sourceTree = "<group>"; };
+		B2DD8EA9191EC50E00DFF899 /* FilterBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterBar.m; sourceTree = "<group>"; };
+		B2DD8EAB191ED6EE00DFF899 /* CustomToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomToolBar.h; sourceTree = "<group>"; };
+		B2DD8EAC191ED6EE00DFF899 /* CustomToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomToolBar.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +262,10 @@
 				8F65722418F9B87600477299 /* LocationManager.m */,
 				8F65723F18FA77E400477299 /* Images.xcassets */,
 				8F6571C218F909D100477299 /* Supporting Files */,
+				B2DD8EA8191EC50E00DFF899 /* FilterBar.h */,
+				B2DD8EA9191EC50E00DFF899 /* FilterBar.m */,
+				B2DD8EAB191ED6EE00DFF899 /* CustomToolBar.h */,
+				B2DD8EAC191ED6EE00DFF899 /* CustomToolBar.m */,
 			);
 			path = Thoughts;
 			sourceTree = "<group>";
@@ -397,6 +407,8 @@
 				8F6571D218F909D100477299 /* ViewController.m in Sources */,
 				8F65722518F9B87600477299 /* LocationManager.m in Sources */,
 				8F6571CC18F909D100477299 /* AppDelegate.m in Sources */,
+				B2DD8EAA191EC50E00DFF899 /* FilterBar.m in Sources */,
+				B2DD8EAD191ED6EE00DFF899 /* CustomToolBar.m in Sources */,
 				8F6571C818F909D100477299 /* main.m in Sources */,
 				8F65720E18F927E700477299 /* MapViewController.m in Sources */,
 			);

@@ -8,6 +8,8 @@
 
 #import "MapViewController.h"
 #import <Mapbox/Mapbox.h>
+#import "FilterBar.h"
+#import "CustomToolBar.h"
 
 //#59bbcf turqoise colo
 
@@ -21,20 +23,10 @@ BOOL mapbox = true;
 @end
 
 @implementation MapViewController{
-    GMSMapView *mapView_;
     RMMapView *mapViewR;
 }
 
 @synthesize markerDictionary;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -44,27 +36,11 @@ BOOL mapbox = true;
     self.markerArray = [[NSMutableArray alloc] init];
     self.statusArray = [[NSMutableArray alloc] init];
     // Do any additional setup after loading the view.
-//    self.searchTextField.delegate = self;
     self.statusTextField.layer.cornerRadius = 4.0f;
     [self.doneButton setHidden:YES];
-//    [self.statusTextField setReturnKeyType:UIReturnKeyDone];
-
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:40.1105
-                                                            longitude:-88.2284
-                                                                 zoom:15];
-    mapView_ = [GMSMapView mapWithFrame:self.map.bounds camera:camera];
-    mapView_.myLocationEnabled = YES;
-    mapView_.delegate = self;
-//    [self.map addSubview:mapView_];
-    
-    
-    
-    
-    
     
     RMMapboxSource *tileSource = [[RMMapboxSource alloc] initWithMapID:@"zakavila.i74a6maa"];
-    CLLocationCoordinate2D centerCoordinate = CLLocationCoordinate2DMake(40.11344592090707, -88.22478390307);
-    mapViewR = [[RMMapView alloc] initWithFrame:self.view.bounds andTilesource:tileSource centerCoordinate:centerCoordinate zoomLevel:9.0 maxZoomLevel:15.0 minZoomLevel:1.0 backgroundImage:nil];
+    mapViewR = [[RMMapView alloc] initWithFrame:self.view.bounds andTilesource:tileSource centerCoordinate:CLLocationCoordinate2DMake(0.0f, 0.0f) zoomLevel:9.0 maxZoomLevel:15.0 minZoomLevel:1.0 backgroundImage:nil];
     
     mapViewR.tileSourcesZoom = 17.0;
     
@@ -110,6 +86,13 @@ BOOL mapbox = true;
     self.profilePic.layer.masksToBounds = YES;
     
     self.statusTextField.delegate = self;
+    
+    CGFloat toolBarHeight = self.view.frame.size.height/9;
+    CustomToolBar *toolBar = [[CustomToolBar alloc] initWithFrame:CGRectMake(0.0f, self.view.frame.size.height-toolBarHeight*3/2, self.view.frame.size.width, toolBarHeight*3/2)];
+    [self.view addSubview:toolBar];
+    
+    FilterBar *filterBar = [[FilterBar alloc] initWithFrame:CGRectMake(0.0f, 20.0f, self.view.frame.size.width, toolBarHeight)];
+    [self.view addSubview:filterBar];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -180,7 +163,6 @@ BOOL mapbox = true;
                     newmark.position = CLLocationCoordinate2DMake(((PFGeoPoint *)obj[@"geo"]).latitude, ((PFGeoPoint *)obj[@"geo"]).longitude);
                     newmark.title = obj[@"username"];
                     newmark.snippet = obj[@"status"];
-                    newmark.map = mapView_;
                     
                     [self.markerArray addObject:newmark];
                     if([self.markerDictionary objectForKey:[obj objectId]]){
@@ -199,8 +181,6 @@ BOOL mapbox = true;
                 if(obj[@"visible"]){
                     [self.markerDictionary setObject:annotation forKey:[obj objectId]];
                 }
-                
-                [mapView_ setSelectedMarker:newmark];
                 
             }
             
@@ -237,7 +217,6 @@ BOOL mapbox = true;
             }
             
         }
-        [mapView_ setSelectedMarker:toShow];
     }
 }
 
@@ -246,6 +225,9 @@ BOOL mapbox = true;
     CLLocationDegrees centerLongitude = mapView.centerCoordinate.longitude;
     
     CLLocation * screenCenter = [[CLLocation alloc] initWithLatitude:centerLatitude longitude:centerLongitude];
+    
+    if (!self.statusArray)
+        return;
     
     CLLocationDistance minDistance = [screenCenter distanceFromLocation:[[CLLocation alloc] initWithLatitude:((PFGeoPoint *)self.statusArray[0][@"geo"]).latitude longitude:((PFGeoPoint *)self.statusArray[0][@"geo"]).longitude]];
     RMAnnotation * toShow = self.markerArray[0];
@@ -352,7 +334,7 @@ BOOL mapbox = true;
 //}
 
 -(void)locationDidUpdate:(NSNotification *)notification{
-    NSLog(@"test");
+//    NSLog(@"test");
     CLLocation * location = notification.object;
     
     NSString *longitude = [NSString stringWithFormat:@"%f", location.coordinate.longitude ];
@@ -365,6 +347,10 @@ BOOL mapbox = true;
         [[self.shoutoutRoot childByAppendingPath:[[PFUser currentUser] objectId]] setValue:@{@"lat": latitude, @"long": longitude}];
         
         [PFUser currentUser][@"geo"] = [PFGeoPoint geoPointWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
+    }
+    
+    if (mapViewR.centerCoordinate.latitude == 0 && mapViewR.centerCoordinate.longitude == 0) {
+        [mapViewR setCenterCoordinate:CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)];
     }
 }
 
