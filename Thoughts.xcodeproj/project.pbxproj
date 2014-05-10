@@ -337,7 +337,7 @@
 				ORGANIZATIONNAME = "Mayank Jain";
 				TargetAttributes = {
 					8F6571B718F909D100477299 = {
-						DevelopmentTeam = 9C8EQ3DGNG;
+						DevelopmentTeam = BG424EHT8K;
 					};
 					8F6571D818F909D100477299 = {
 						TestTargetID = 8F6571B718F909D100477299;
@@ -629,6 +629,7 @@
 				8F6571EC18F909D100477299 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8F6571ED18F909D100477299 /* Build configuration list for PBXNativeTarget "ThoughtsTests" */ = {
 			isa = XCConfigurationList;
@@ -637,6 +638,7 @@
 				8F6571EF18F909D100477299 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
