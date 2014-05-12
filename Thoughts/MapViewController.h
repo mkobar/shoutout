@@ -10,11 +10,13 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
-#import <Mapbox/Mapbox.h>
+#import "Mapbox.h"
 #import <MessageUI/MessageUI.h>
 #import <Firebase/Firebase.h>
+#import "CustomToolBar.h"
+#import "AddShoutWindow.h"
 
-@interface MapViewController : UIViewController<GMSMapViewDelegate, UITextFieldDelegate, UITextViewDelegate, CLLocationManagerDelegate, RMMapViewDelegate, MFMessageComposeViewControllerDelegate, RDAPIRequestDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
+@interface MapViewController : UIViewController<GMSMapViewDelegate, UITextFieldDelegate, UITextViewDelegate, CLLocationManagerDelegate, RMMapViewDelegate, MFMessageComposeViewControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CustomToolBarDelegate, AddShoutWindowDelegate>
 @property (strong, nonatomic) IBOutlet UIView *map;
 @property (strong, nonatomic) IBOutlet UIImageView *profilePic;
 @property (strong, nonatomic) IBOutlet UITextView *statusTextField;
@@ -33,7 +35,6 @@
 @property (strong, nonatomic) Firebase* shoutoutRootStatus;
 @property (strong, nonatomic) Firebase* shoutoutRootPrivacy;
 
-@property (strong, nonatomic) Rdio *rdio;
 //- (IBAction)shoutOutButtonPressed:(id)sender;
 
 -(void)locationDidUpdate:(NSNotification *) notification;

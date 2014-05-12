@@ -11,7 +11,7 @@
 @class CustomToolBar;
 
 @protocol CustomToolBarDelegate <NSObject>
-- (void)didSelectButton:(UIButton*)button;
+- (void)toolBar:(CustomToolBar*)toolBar didSelectButton:(UIButton*)button;
 @end
 
 @interface CustomToolBar : UIView
@@ -21,6 +21,8 @@
 @property (nonatomic, strong) UIButton *addPinButton;
 @property (nonatomic, strong) UIButton *addShoutButton;
 @property (nonatomic, strong) UIButton *settingsButton;
+
+@property id<CustomToolBarDelegate> delegate;
 
 - (void)hideAddButtons;
 

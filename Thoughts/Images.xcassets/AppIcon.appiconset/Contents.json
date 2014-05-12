@@ -3,19 +3,19 @@
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "shoutout_logo-2.png",
+      "filename" : "smallIcon-1.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "shoutout_logo-1.png",
+      "filename" : "smallIcon.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "shoutout_logo.png",
+      "filename" : "rsz_bigicon.png",
       "scale" : "2x"
     }
   ],

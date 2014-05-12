@@ -10,8 +10,7 @@
 #import <Parse/Parse.h>
 #import <GoogleMaps/GoogleMaps.h>
 #import <FacebookSDK/FacebookSDK.h>
-#import <Mapbox/Mapbox.h>
-#import <Rdio/Rdio.h>
+#import "MapBox.h"
 
 
 @implementation AppDelegate

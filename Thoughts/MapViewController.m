@@ -7,9 +7,9 @@
 //
 
 #import "MapViewController.h"
-#import <Mapbox/Mapbox.h>
-#import "FilterBar.h"
-#import "CustomToolBar.h"
+#import "Mapbox.h"
+#import "NewFilterBar.h"
+#import "ShoutRMMarker.h"
 
 //#59bbcf turqoise colo
 
@@ -19,7 +19,10 @@ BOOL googleMaps = false;
 BOOL mapbox = true;
 
 @interface MapViewController ()
-
+@property (nonatomic, strong) AddShoutWindow *addShoutWindow;
+@property (nonatomic, strong) NSString *myImageUrl;
+@property BOOL locationFirstSet;
+@property UIImageView *messagesView;
 @end
 
 @implementation MapViewController{
@@ -31,7 +34,7 @@ BOOL mapbox = true;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.locationFirstSet = NO;
     self.markerDictionary = [[NSMutableDictionary alloc] init];
     self.markerArray = [[NSMutableArray alloc] init];
     self.statusArray = [[NSMutableArray alloc] init];
@@ -40,7 +43,7 @@ BOOL mapbox = true;
     [self.doneButton setHidden:YES];
     
     RMMapboxSource *tileSource = [[RMMapboxSource alloc] initWithMapID:@"zakavila.i74a6maa"];
-    mapViewR = [[RMMapView alloc] initWithFrame:self.view.bounds andTilesource:tileSource centerCoordinate:CLLocationCoordinate2DMake(0.0f, 0.0f) zoomLevel:9.0 maxZoomLevel:15.0 minZoomLevel:1.0 backgroundImage:nil];
+    mapViewR = [[RMMapView alloc] initWithFrame:self.view.bounds andTilesource:tileSource centerCoordinate:CLLocationCoordinate2DMake(0.0f, 0.0f) zoomLevel:9.0 maxZoomLevel:20.0 minZoomLevel:1.0 backgroundImage:nil];
     
     mapViewR.tileSourcesZoom = 17.0;
     
@@ -72,7 +75,7 @@ BOOL mapbox = true;
         [self changeUserStatus:snapshot.name toNewStatus:snapshot.value];
     }];
     
-    [self.shoutoutRootStatus observeEventType:FEventTypeChildChanged withBlock:^(FDataSnapshot *snapshot) {
+    [self.shoutoutRootPrivacy observeEventType:FEventTypeChildChanged withBlock:^(FDataSnapshot *snapshot) {
         [self changeUserPrivacy:snapshot.name toNewPrivacy:snapshot.value];
     }];
     
@@ -85,13 +88,24 @@ BOOL mapbox = true;
     self.profilePic.layer.cornerRadius = 35.0;
     self.profilePic.layer.masksToBounds = YES;
     
+    if ([PFUser currentUser])
+        self.myImageUrl = [NSString stringWithString:[PFUser currentUser][@"picURL"]];
+    
     self.statusTextField.delegate = self;
     
     CGFloat toolBarHeight = self.view.frame.size.height/9;
     CustomToolBar *toolBar = [[CustomToolBar alloc] initWithFrame:CGRectMake(0.0f, self.view.frame.size.height-toolBarHeight*3/2, self.view.frame.size.width, toolBarHeight*3/2)];
+    toolBar.delegate = self;
     [self.view addSubview:toolBar];
     
-    FilterBar *filterBar = [[FilterBar alloc] initWithFrame:CGRectMake(0.0f, 20.0f, self.view.frame.size.width, toolBarHeight)];
+    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(20.0f, 22.0f, self.view.frame.size.width-40, 30.0f)];
+    textField.delegate = self;
+    textField.returnKeyType = UIReturnKeySearch;
+    textField.backgroundColor = [UIColor colorWithWhite:1.0f alpha:.80f];
+    textField.layer.cornerRadius = 5.0f;
+    [self.view addSubview:textField];
+    
+    NewFilterBar *filterBar = [[NewFilterBar alloc] initWithFrame:CGRectMake(0.0f, 54.0f, self.view.frame.size.width, toolBarHeight*3/2)];
     [self.view addSubview:filterBar];
 }
 
@@ -226,7 +240,7 @@ BOOL mapbox = true;
     
     CLLocation * screenCenter = [[CLLocation alloc] initWithLatitude:centerLatitude longitude:centerLongitude];
     
-    if (!self.statusArray)
+    if (self.statusArray.count == 0)
         return;
     
     CLLocationDistance minDistance = [screenCenter distanceFromLocation:[[CLLocation alloc] initWithLatitude:((PFGeoPoint *)self.statusArray[0][@"geo"]).latitude longitude:((PFGeoPoint *)self.statusArray[0][@"geo"]).longitude]];
@@ -243,7 +257,6 @@ BOOL mapbox = true;
             minDistance = distance;
             toShow = self.markerArray[i];
         }
-        
     }
     [mapView selectAnnotation:toShow animated:YES];
 }
@@ -264,7 +277,6 @@ BOOL mapbox = true;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    
     [textField resignFirstResponder];
     return YES;
 }
@@ -296,9 +308,35 @@ BOOL mapbox = true;
     return drawnImage;
 }
 
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+- (void)toolBar:(CustomToolBar *)toolBar didSelectButton:(UIButton *)button
 {
-    
+    if (button == toolBar.addShoutButton) {
+        if (!self.addShoutWindow) {
+            self.addShoutWindow = [[AddShoutWindow alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 300.0f, 192.0f)];
+            self.addShoutWindow.delegate = self;
+            self.addShoutWindow.frame = CGRectMake(self.view.frame.size.width/8, self.view.frame.size.height/3, self.addShoutWindow.frame.size.width, self.addShoutWindow.frame.size.height);
+            [self.view addSubview:self.addShoutWindow];
+        }
+        else {
+            [self.addShoutWindow removeFromSuperview];
+            self.addShoutWindow = nil;
+        }
+    }
+    else if (button == toolBar.addButton && self.addShoutWindow) {
+        [self.addShoutWindow removeFromSuperview];
+        self.addShoutWindow = nil;
+    }
+    else if (button == toolBar.messagesButton) {
+        if (!self.messagesView) {
+            self.messagesView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MessagePopup"]];
+            self.messagesView.frame = CGRectMake(self.view.frame.size.width/2-[UIImage imageNamed:@"MessagePopup"].size.width/2, self.view.frame.size.height/2-[UIImage imageNamed:@"MessagePopup"].size.height/2, [UIImage imageNamed:@"MessagePopup"].size.width, [UIImage imageNamed:@"MessagePopup"].size.height);
+            [self.view addSubview:self.messagesView];
+        }
+        else {
+            [self.messagesView removeFromSuperview];
+            self.messagesView = nil;
+        }
+    }
 }
 
 - (IBAction)doneButtonPressed:(id)sender {
@@ -344,13 +382,14 @@ BOOL mapbox = true;
     }];
      */
     if([PFUser currentUser]){
-        [[self.shoutoutRoot childByAppendingPath:[[PFUser currentUser] objectId]] setValue:@{@"lat": latitude, @"long": longitude}];
+        [[self.shoutoutRoot childByAppendingPath:[[PFUser currentUser] objectId]] updateChildValues:@{@"lat": latitude, @"lon": longitude}];
         
         [PFUser currentUser][@"geo"] = [PFGeoPoint geoPointWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
     }
-    
-    if (mapViewR.centerCoordinate.latitude == 0 && mapViewR.centerCoordinate.longitude == 0) {
-        [mapViewR setCenterCoordinate:CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)];
+    if (!self.locationFirstSet) {
+//        [mapViewR setCenterCoordinate:CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)];
+        [mapViewR setZoom:17.0f atCoordinate:CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude) animated:NO];
+        self.locationFirstSet = YES;
     }
 }
 
@@ -360,63 +399,53 @@ BOOL mapbox = true;
         return nil;
     
     RMMarker *marker;
-
-    marker = [[RMMarker alloc] initWithUIImage:[self imageWithImage:[UIImage imageWithData:
-                                                                                 [NSData dataWithContentsOfURL:
-                                                                                  [NSURL URLWithString: annotation.userInfo[@"picURL"]]]] borderImage:[UIImage imageNamed:@"background.png"] covertToSize:CGSizeMake(48, 56)]];
-
-    marker.canShowCallout = YES;
-    
+    marker = [[ShoutRMMarker alloc] initShoutWithUIImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString: annotation.userInfo[@"picURL"]]]] andAnnotation:annotation];
+    marker.canShowCallout = NO;
     return marker;
 }
 
 -(UIImage *)imageWithImage:(UIImage *)image borderImage:(UIImage *)borderImage covertToSize:(CGSize)size {
     UIGraphicsBeginImageContext(size);
     [borderImage drawInRect:CGRectMake( 0, 0, size.width, size.height )];
-    [image drawInRect:CGRectMake( 4, 4, 40, 40)];
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGContextSaveGState(ctx);
+    CGPathRef clippath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(2,2,44,44) byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(20.0f, 20.0f)].CGPath;
+    CGContextAddPath(ctx, clippath);
+    CGContextClip(ctx);
+    [image drawInRect:CGRectMake( 2, 2, 44, 44)];
+    CGContextRestoreGState(ctx);
     UIImage *destImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return destImage;
 }
 
-- (void)doubleTapOnAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map{
-    if(annotation.userInfo[@"phone"]){
-        MFMessageComposeViewController *viewController = [[MFMessageComposeViewController alloc] init];
-        
-        viewController.messageComposeDelegate = self;
-        viewController.recipients = [[NSArray alloc] initWithObjects:annotation.userInfo[@"phone"], nil];
-        [self presentViewController:viewController animated:YES completion:nil];
-    }
-    if([annotation.title rangeOfString:@"listening to " options:NSCaseInsensitiveSearch].location != NSNotFound){
-        NSString * song = [annotation.title substringFromIndex:13];
-        self.rdio = [[Rdio alloc] initWithConsumerKey:@"thrhvh2bkpy5devcntw4qat6" andSecret:@"Nrzm8K5G4m" delegate:nil];
-        [self.rdio callAPIMethod:@"searchSuggestions" withParameters:[NSDictionary dictionaryWithObject:song forKey:@"query"] delegate:self];
-    }
-    else if([annotation.title rangeOfString:@"listen to " options:NSCaseInsensitiveSearch].location != NSNotFound){
-        NSString * song = [annotation.title substringFromIndex:10];
-        self.rdio = [[Rdio alloc] initWithConsumerKey:@"thrhvh2bkpy5devcntw4qat6" andSecret:@"Nrzm8K5G4m" delegate:nil];
-        [self.rdio callAPIMethod:@"searchSuggestions" withParameters:[NSDictionary dictionaryWithObject:song forKey:@"query"] delegate:self];
+- (void)tapOnMarker:(ButtonRMMarker*)marker at:(CGPoint)point
+{
+    for (CALayer *layer in marker.sublayers) {
+        CGPoint convertedPoint = [layer convertPoint:point fromLayer:[marker superlayer]];
+        if ([layer containsPoint:convertedPoint]&&layer.name) {
+            [((ShoutRMMarker*)marker)didPressButtonWithName:layer.name];
+        }
     }
 }
 
-- (void)longPressOnAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map{
-
+- (void)tapOnAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map
+{
+    
 }
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result{
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void) rdioRequest:(RDAPIRequest *)request didLoadData:(id)data{
-    [self.rdio.player playSource:data[0][@"key"]];
-}
-
-- (void) rdioRequest:(RDAPIRequest *)request didFailWithError:(NSError *)error{
-
-}
-
 - (void) animateUser:(NSString *)userID toNewPosition:(NSDictionary *)newMetadata {
-    ((RMAnnotation *)self.markerDictionary[userID]).coordinate = CLLocationCoordinate2DMake([newMetadata[@"lat"] floatValue], [newMetadata[@"long"] floatValue] );
+    ((RMAnnotation *)self.markerDictionary[userID]).coordinate = CLLocationCoordinate2DMake([newMetadata[@"lat"] floatValue], [newMetadata[@"lon"] floatValue] );
+    ((RMAnnotation *)self.markerDictionary[userID]).title = newMetadata[@"status"];
+    if ((RMAnnotation *)self.markerDictionary[userID]) {
+        [mapViewR removeAnnotation:((RMAnnotation *)self.markerDictionary[userID])];
+        [mapViewR addAnnotation:((RMAnnotation *)self.markerDictionary[userID])];
+    }
+    
 }
 
 - (void) changeUserStatus:(NSString *)userID toNewStatus:(NSDictionary *)newMetadata {
@@ -462,6 +491,43 @@ BOOL mapbox = true;
     }
     else{
         self.statusTextField.text = [PFUser currentUser][@"status"];
+    }
+}
+
+- (void)addShoutWindow:(AddShoutWindow *)addShoutWindow didPressButton:(UIButton *)button
+{
+    if (button == addShoutWindow.xButton) {
+        [self.addShoutWindow removeFromSuperview];
+        self.addShoutWindow = nil;
+    }
+    else if (button == addShoutWindow.postButton) {
+        [PFUser currentUser][@"status"] = addShoutWindow.shoutContent.text;//self.statusTextField.text;
+        [PFUser currentUser][@"visible"] = [NSNumber numberWithBool:YES];
+        
+        CLLocation *currentLocation = [[AppDelegate sharedLocationManager] location];
+        
+        PFGeoPoint *currentPoint = [PFGeoPoint geoPointWithLatitude:currentLocation.coordinate.latitude
+                                                          longitude:currentLocation.coordinate.longitude];
+        [[PFUser currentUser] setObject:currentPoint forKey:@kParseObjectGeoKey];
+        
+        [[PFUser currentUser] saveInBackground];
+        
+        [addShoutWindow.shoutContent resignFirstResponder];
+        
+        [[self.shoutoutRoot childByAppendingPath:[[PFUser currentUser] objectId]] updateChildValues:@{@"status": addShoutWindow.shoutContent.text}];
+        
+//        if(self.privacyToggle.on){
+        [[[self.shoutoutRoot childByAppendingPath:[[PFUser currentUser] objectId]] childByAppendingPath:@"privacy" ] setValue:@"YES"];
+//        }
+//        else{
+//            [[[self.shoutoutRoot childByAppendingPath:[[PFUser currentUser] objectId]] childByAppendingPath:@"privacy" ] setValue:@"NO"];
+//        }
+        
+        PFGeoPoint *currentCenter = [PFGeoPoint geoPointWithLatitude:mapViewR.centerCoordinate.latitude longitude:mapViewR.centerCoordinate.longitude];
+        //    [self updateMapWithLocation:currentCenter];
+        
+        [self.addShoutWindow removeFromSuperview];
+        self.addShoutWindow = nil;
     }
 }
 
@@ -538,36 +604,6 @@ BOOL mapbox = true;
 // Sent to the delegate when the log in screen is dismissed.
 - (void)logInViewControllerDidCancelLogIn:(PFLogInViewController *)logInController {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (IBAction)saveButtonPressed:(id)sender {
-    [PFUser currentUser][@"status"] = self.statusTextField.text;
-    [PFUser currentUser][@"visible"] = [NSNumber numberWithBool:self.privacyToggle.on];
-    
-    CLLocation *currentLocation = [[AppDelegate sharedLocationManager] location];
-    
-    PFGeoPoint *currentPoint = [PFGeoPoint geoPointWithLatitude:currentLocation.coordinate.latitude
-                                                      longitude:currentLocation.coordinate.longitude];
-    [[PFUser currentUser] setObject:currentPoint forKey:@kParseObjectGeoKey];
-    
-    [[PFUser currentUser] saveInBackground];
-    
-    [self.navigationController popViewControllerAnimated:YES];
-    
-//    [self shoutOutButtonPressed:nil];
-    [self.statusTextField resignFirstResponder];
-    
-    [[[self.shoutoutRootStatus childByAppendingPath:[[PFUser currentUser] objectId]] childByAppendingPath:@"status" ] setValue:self.statusTextField.text];
-    
-    if(self.privacyToggle.on){
-        [[[self.shoutoutRootStatus childByAppendingPath:[[PFUser currentUser] objectId]] childByAppendingPath:@"privacy" ] setValue:@"YES"];
-    }
-    else{
-        [[[self.shoutoutRootStatus childByAppendingPath:[[PFUser currentUser] objectId]] childByAppendingPath:@"privacy" ] setValue:@"NO"];
-    }
-    
-    PFGeoPoint *currentCenter = [PFGeoPoint geoPointWithLatitude:mapViewR.centerCoordinate.latitude longitude:mapViewR.centerCoordinate.longitude];
-//    [self updateMapWithLocation:currentCenter];
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification

@@ -14,7 +14,6 @@
 		8F6571C818F909D100477299 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F6571C718F909D100477299 /* main.m */; };
 		8F6571CC18F909D100477299 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F6571CB18F909D100477299 /* AppDelegate.m */; };
 		8F6571CF18F909D100477299 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F6571CD18F909D100477299 /* Main.storyboard */; };
-		8F6571D218F909D100477299 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F6571D118F909D100477299 /* ViewController.m */; };
 		8F6571DB18F909D100477299 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F6571DA18F909D100477299 /* XCTest.framework */; };
 		8F6571DC18F909D100477299 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F6571BB18F909D100477299 /* Foundation.framework */; };
 		8F6571DD18F909D100477299 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F6571BF18F909D100477299 /* UIKit.framework */; };
@@ -47,15 +46,18 @@
 		8F65722218F929EB00477299 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F65722118F929EB00477299 /* GLKit.framework */; };
 		8F65722518F9B87600477299 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F65722418F9B87600477299 /* LocationManager.m */; };
 		8F65722918FA01CC00477299 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F65722818FA01CC00477299 /* background.png */; };
-		8F65722B18FA07DF00477299 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F65722A18FA07DF00477299 /* Mapbox.framework */; };
-		8F65722D18FA088D00477299 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F65722C18FA088D00477299 /* libsqlite3.dylib */; };
-		8F65722F18FA08A600477299 /* Mapbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8F65722E18FA08A600477299 /* Mapbox.bundle */; };
 		8F65723518FA1EDD00477299 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F65723418FA1EDD00477299 /* MessageUI.framework */; };
-		8F65723818FA356A00477299 /* Rdio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F65723618FA2ADE00477299 /* Rdio.framework */; };
 		8F65723A18FA4B7B00477299 /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F65723918FA4B7B00477299 /* Firebase.framework */; };
 		8F65723C18FA52D500477299 /* shoutout_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F65723B18FA52D500477299 /* shoutout_white.png */; };
 		8F65723E18FA5A1C00477299 /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F65723D18FA5A1C00477299 /* search.png */; };
 		8F65724018FA77E400477299 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F65723F18FA77E400477299 /* Images.xcassets */; };
+		B22370B6192014B400B3BEC5 /* NewFilterBar.m in Sources */ = {isa = PBXBuildFile; fileRef = B22370B5192014B400B3BEC5 /* NewFilterBar.m */; };
+		B243EE13191F37A800D41ED9 /* ShoutRMMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = B243EE12191F37A800D41ED9 /* ShoutRMMarker.m */; };
+		B243EE26191F513A00D41ED9 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F65722C18FA088D00477299 /* libsqlite3.dylib */; };
+		B243EE27191F525200D41ED9 /* Mapbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8F65722E18FA08A600477299 /* Mapbox.bundle */; };
+		B243EE28191F541200D41ED9 /* libMapbox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B243EE1A191F422400D41ED9 /* libMapbox.a */; };
+		B243EE36191FDC7B00D41ED9 /* AddShoutWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = B243EE35191FDC7B00D41ED9 /* AddShoutWindow.m */; };
+		B2C03966191F177F00AFF741 /* UIImage+SRUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = B2C03965191F177F00AFF741 /* UIImage+SRUtilities.m */; };
 		B2DD8EAA191EC50E00DFF899 /* FilterBar.m in Sources */ = {isa = PBXBuildFile; fileRef = B2DD8EA9191EC50E00DFF899 /* FilterBar.m */; };
 		B2DD8EAD191ED6EE00DFF899 /* CustomToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = B2DD8EAC191ED6EE00DFF899 /* CustomToolBar.m */; };
 /* End PBXBuildFile section */
@@ -67,6 +69,27 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8F6571B718F909D100477299;
 			remoteInfo = Thoughts;
+		};
+		B243EE19191F422400D41ED9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B243EE14191F422400D41ED9 /* MapView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 17F31EFA1331050A00122B16;
+			remoteInfo = MapView;
+		};
+		B243EE1B191F422400D41ED9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B243EE14191F422400D41ED9 /* MapView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DD6A83751644A20C0097F31F;
+			remoteInfo = Resources;
+		};
+		B243EE1D191F45C900D41ED9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B243EE14191F422400D41ED9 /* MapView.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B8C974130E8A19B2007D16AD;
+			remoteInfo = MapView;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -82,8 +105,6 @@
 		8F6571CA18F909D100477299 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8F6571CB18F909D100477299 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		8F6571CE18F909D100477299 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		8F6571D018F909D100477299 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		8F6571D118F909D100477299 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		8F6571D918F909D100477299 /* ThoughtsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ThoughtsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F6571DA18F909D100477299 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		8F6571E218F909D100477299 /* ThoughtsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ThoughtsTests-Info.plist"; sourceTree = "<group>"; };
@@ -118,15 +139,22 @@
 		8F65722318F9B87600477299 /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
 		8F65722418F9B87600477299 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
 		8F65722818FA01CC00477299 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
-		8F65722A18FA07DF00477299 /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = "<group>"; };
 		8F65722C18FA088D00477299 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		8F65722E18FA08A600477299 /* Mapbox.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Mapbox.bundle; sourceTree = "<group>"; };
 		8F65723418FA1EDD00477299 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		8F65723618FA2ADE00477299 /* Rdio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Rdio.framework; sourceTree = "<group>"; };
 		8F65723918FA4B7B00477299 /* Firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Firebase.framework; sourceTree = "<group>"; };
 		8F65723B18FA52D500477299 /* shoutout_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shoutout_white.png; sourceTree = "<group>"; };
 		8F65723D18FA5A1C00477299 /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
 		8F65723F18FA77E400477299 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		B22370B4192014B400B3BEC5 /* NewFilterBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFilterBar.h; sourceTree = "<group>"; };
+		B22370B5192014B400B3BEC5 /* NewFilterBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFilterBar.m; sourceTree = "<group>"; };
+		B243EE11191F37A800D41ED9 /* ShoutRMMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShoutRMMarker.h; sourceTree = "<group>"; };
+		B243EE12191F37A800D41ED9 /* ShoutRMMarker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoutRMMarker.m; sourceTree = "<group>"; };
+		B243EE14191F422400D41ED9 /* MapView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapView.xcodeproj; path = "mapbox-ios-sdk/MapView/MapView.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		B243EE34191FDC7B00D41ED9 /* AddShoutWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddShoutWindow.h; sourceTree = "<group>"; };
+		B243EE35191FDC7B00D41ED9 /* AddShoutWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddShoutWindow.m; sourceTree = "<group>"; };
+		B2C03964191F177F00AFF741 /* UIImage+SRUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+SRUtilities.h"; sourceTree = "<group>"; };
+		B2C03965191F177F00AFF741 /* UIImage+SRUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+SRUtilities.m"; sourceTree = "<group>"; };
 		B2DD8EA8191EC50E00DFF899 /* FilterBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterBar.h; sourceTree = "<group>"; };
 		B2DD8EA9191EC50E00DFF899 /* FilterBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterBar.m; sourceTree = "<group>"; };
 		B2DD8EAB191ED6EE00DFF899 /* CustomToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomToolBar.h; sourceTree = "<group>"; };
@@ -138,7 +166,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F65723818FA356A00477299 /* Rdio.framework in Frameworks */,
+				B243EE28191F541200D41ED9 /* libMapbox.a in Frameworks */,
+				B243EE26191F513A00D41ED9 /* libsqlite3.dylib in Frameworks */,
 				8F6571FF18F910C000477299 /* Security.framework in Frameworks */,
 				8F6571F318F9106F00477299 /* AudioToolbox.framework in Frameworks */,
 				8F65723A18FA4B7B00477299 /* Firebase.framework in Frameworks */,
@@ -146,7 +175,6 @@
 				8F6571F518F9107A00477299 /* CFNetwork.framework in Frameworks */,
 				8F6571BE18F909D100477299 /* CoreGraphics.framework in Frameworks */,
 				8F65723518FA1EDD00477299 /* MessageUI.framework in Frameworks */,
-				8F65722D18FA088D00477299 /* libsqlite3.dylib in Frameworks */,
 				8F65722218F929EB00477299 /* GLKit.framework in Frameworks */,
 				8F65722018F929D300477299 /* OpenGLES.framework in Frameworks */,
 				8F65721E18F9296000477299 /* libicucore.dylib in Frameworks */,
@@ -168,7 +196,6 @@
 				8F6571C018F909D100477299 /* UIKit.framework in Frameworks */,
 				8F6571F118F9105400477299 /* Parse.framework in Frameworks */,
 				8F65720518F915AE00477299 /* FacebookSDK.framework in Frameworks */,
-				8F65722B18FA07DF00477299 /* Mapbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,6 +215,7 @@
 		8F6571AF18F909D100477299 = {
 			isa = PBXGroup;
 			children = (
+				B243EE14191F422400D41ED9 /* MapView.xcodeproj */,
 				8F6571C118F909D100477299 /* Thoughts */,
 				8F6571E018F909D100477299 /* ThoughtsTests */,
 				8F6571BA18F909D100477299 /* Frameworks */,
@@ -208,11 +236,9 @@
 			isa = PBXGroup;
 			children = (
 				8F65723918FA4B7B00477299 /* Firebase.framework */,
-				8F65723618FA2ADE00477299 /* Rdio.framework */,
 				8F65723418FA1EDD00477299 /* MessageUI.framework */,
 				8F65722E18FA08A600477299 /* Mapbox.bundle */,
 				8F65722C18FA088D00477299 /* libsqlite3.dylib */,
-				8F65722A18FA07DF00477299 /* Mapbox.framework */,
 				8F65722118F929EB00477299 /* GLKit.framework */,
 				8F65721F18F929D300477299 /* OpenGLES.framework */,
 				8F65721D18F9296000477299 /* libicucore.dylib */,
@@ -248,6 +274,8 @@
 		8F6571C118F909D100477299 /* Thoughts */ = {
 			isa = PBXGroup;
 			children = (
+				B2C03964191F177F00AFF741 /* UIImage+SRUtilities.h */,
+				B2C03965191F177F00AFF741 /* UIImage+SRUtilities.m */,
 				8F65723B18FA52D500477299 /* shoutout_white.png */,
 				8F65722818FA01CC00477299 /* background.png */,
 				8F65723D18FA5A1C00477299 /* search.png */,
@@ -256,16 +284,20 @@
 				8F6571CD18F909D100477299 /* Main.storyboard */,
 				8F65720C18F927E700477299 /* MapViewController.h */,
 				8F65720D18F927E700477299 /* MapViewController.m */,
-				8F6571D018F909D100477299 /* ViewController.h */,
-				8F6571D118F909D100477299 /* ViewController.m */,
 				8F65722318F9B87600477299 /* LocationManager.h */,
 				8F65722418F9B87600477299 /* LocationManager.m */,
 				8F65723F18FA77E400477299 /* Images.xcassets */,
 				8F6571C218F909D100477299 /* Supporting Files */,
 				B2DD8EA8191EC50E00DFF899 /* FilterBar.h */,
 				B2DD8EA9191EC50E00DFF899 /* FilterBar.m */,
+				B22370B4192014B400B3BEC5 /* NewFilterBar.h */,
+				B22370B5192014B400B3BEC5 /* NewFilterBar.m */,
 				B2DD8EAB191ED6EE00DFF899 /* CustomToolBar.h */,
 				B2DD8EAC191ED6EE00DFF899 /* CustomToolBar.m */,
+				B243EE11191F37A800D41ED9 /* ShoutRMMarker.h */,
+				B243EE12191F37A800D41ED9 /* ShoutRMMarker.m */,
+				B243EE34191FDC7B00D41ED9 /* AddShoutWindow.h */,
+				B243EE35191FDC7B00D41ED9 /* AddShoutWindow.m */,
 			);
 			path = Thoughts;
 			sourceTree = "<group>";
@@ -299,6 +331,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		B243EE15191F422400D41ED9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B243EE1A191F422400D41ED9 /* libMapbox.a */,
+				B243EE1C191F422400D41ED9 /* Mapbox.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -313,6 +354,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B243EE1E191F45C900D41ED9 /* PBXTargetDependency */,
 			);
 			name = Thoughts;
 			productName = Thoughts;
@@ -365,6 +407,12 @@
 			mainGroup = 8F6571AF18F909D100477299;
 			productRefGroup = 8F6571B918F909D100477299 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = B243EE15191F422400D41ED9 /* Products */;
+					ProjectRef = B243EE14191F422400D41ED9 /* MapView.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8F6571B718F909D100477299 /* Thoughts */,
@@ -373,17 +421,34 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		B243EE1A191F422400D41ED9 /* libMapbox.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMapbox.a;
+			remoteRef = B243EE19191F422400D41ED9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B243EE1C191F422400D41ED9 /* Mapbox.bundle */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Mapbox.bundle;
+			remoteRef = B243EE1B191F422400D41ED9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		8F6571B618F909D100477299 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B243EE27191F525200D41ED9 /* Mapbox.bundle in Resources */,
 				8F65723C18FA52D500477299 /* shoutout_white.png in Resources */,
 				8F65724018FA77E400477299 /* Images.xcassets in Resources */,
 				8F65722918FA01CC00477299 /* background.png in Resources */,
 				8F65723E18FA5A1C00477299 /* search.png in Resources */,
 				8F6571C618F909D100477299 /* InfoPlist.strings in Resources */,
-				8F65722F18FA08A600477299 /* Mapbox.bundle in Resources */,
 				8F6571CF18F909D100477299 /* Main.storyboard in Resources */,
 				8F65721218F928C700477299 /* GoogleMaps.bundle in Resources */,
 			);
@@ -404,12 +469,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F6571D218F909D100477299 /* ViewController.m in Sources */,
 				8F65722518F9B87600477299 /* LocationManager.m in Sources */,
 				8F6571CC18F909D100477299 /* AppDelegate.m in Sources */,
+				B243EE36191FDC7B00D41ED9 /* AddShoutWindow.m in Sources */,
 				B2DD8EAA191EC50E00DFF899 /* FilterBar.m in Sources */,
 				B2DD8EAD191ED6EE00DFF899 /* CustomToolBar.m in Sources */,
+				B2C03966191F177F00AFF741 /* UIImage+SRUtilities.m in Sources */,
+				B22370B6192014B400B3BEC5 /* NewFilterBar.m in Sources */,
 				8F6571C818F909D100477299 /* main.m in Sources */,
+				B243EE13191F37A800D41ED9 /* ShoutRMMarker.m in Sources */,
 				8F65720E18F927E700477299 /* MapViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -429,6 +497,11 @@
 			isa = PBXTargetDependency;
 			target = 8F6571B718F909D100477299 /* Thoughts */;
 			targetProxy = 8F6571DE18F909D100477299 /* PBXContainerItemProxy */;
+		};
+		B243EE1E191F45C900D41ED9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MapView;
+			targetProxy = B243EE1D191F45C900D41ED9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -543,7 +616,13 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Thoughts/Thoughts-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"$(SRCROOT)/mapbox-ios-sdk/\"/**",
+				);
 				INFOPLIST_FILE = "Thoughts/Thoughts-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -551,7 +630,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				VALID_ARCHS = armv7s;
+				VALID_ARCHS = "armv7s armv7 arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -569,7 +648,13 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Thoughts/Thoughts-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"$(SRCROOT)/mapbox-ios-sdk/\"/**",
+				);
 				INFOPLIST_FILE = "Thoughts/Thoughts-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -577,7 +662,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				VALID_ARCHS = armv7s;
+				VALID_ARCHS = "armv7s armv7 arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

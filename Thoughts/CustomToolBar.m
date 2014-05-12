@@ -7,6 +7,7 @@
 //
 
 #import "CustomToolBar.h"
+#import "UIImage+SRUtilities.h"
 
 @implementation CustomToolBar
 
@@ -40,28 +41,31 @@
     self.addShoutButton = [[UIButton alloc] initWithFrame:CGRectMake(smallButtonWidth*5/2-10.0f, 0.0f, smallButtonWidth, smallButtonWidth)];
     self.addShoutButton.hidden = YES;
     [self.addShoutButton setImage:[UIImage imageNamed:@"AddShout"] forState:UIControlStateNormal];
+    [self.addShoutButton addTarget:self action:@selector(didSelectButton:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.addShoutButton];
     
     self.addPinButton = [[UIButton alloc] initWithFrame:CGRectMake(smallButtonWidth*9/2+10.0f, 0.0f, smallButtonWidth, smallButtonWidth)];
     self.addPinButton.hidden = YES;
     [self.addPinButton setImage:[UIImage imageNamed:@"AddPin"] forState:UIControlStateNormal];
+    [self.addPinButton addTarget:self action:@selector(didSelectButton:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.addPinButton];
 }
 
 - (void)didSelectButton:(UIButton*)button
 {
     if (button == self.addButton) {
-        if (button.tintColor == [UIColor blackColor]) {
+        if (self.addShoutButton.isHidden) {
             self.addShoutButton.hidden = NO;
             self.addPinButton.hidden = NO;
-            self.addButton.tintColor = [UIColor blackColor];
+            [self.addButton setImage:[UIImage imageNamed:@"PressedAdd"] forState:UIControlStateNormal];
         }
         else {
             self.addShoutButton.hidden = YES;
             self.addPinButton.hidden = YES;
-            self.addButton.tintColor = [UIColor clearColor];
+            [self.addButton setImage:[UIImage imageNamed:@"Add"] forState:UIControlStateNormal];
         }
     }
+    [self.delegate toolBar:self didSelectButton:button];
 }
 
 - (void)hideAddButtons
